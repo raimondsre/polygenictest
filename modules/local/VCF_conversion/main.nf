@@ -44,7 +44,7 @@ process VCF_conversion {
     #  --threads 8 \
     #  --memory 4000 \
     #  --seed 31 \
-    #  --score $scorefile \
+    #  --score \$scorefile \
     #  --read-freq joint_germline.filtered.afreq \
     #  --bfile ${output} \
     #  --out ${output}
