@@ -11,7 +11,7 @@ process VCF_conversion {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    tuple val(meta), path("*.csv"), emit: fam
+    path("*.csv"), emit: fam
     path  "versions.yml"           , emit: versions
 
     when:
