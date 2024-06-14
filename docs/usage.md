@@ -29,7 +29,7 @@ sample_1,type_1_diabetes,sample_1.vcf,2
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `sample`  | Custom sample name. Spaces in sample names are automatically converted to underscores (`_`). |
 | `trait` | Trait or disease EFO identificator.                                                             |
-| `genome_file` | File name of the individuals VCF genome.                                                             |
+| `genome_file` | File path of the individuals VCF genome.                                                             |
 | `sex` | Sex of individuals denotes as numeric 1 (male) or 2 (female).                                                             |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
