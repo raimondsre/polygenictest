@@ -1,0 +1,7 @@
+name: VCF_conversion
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconda::PLINK=1.90b6.21-5

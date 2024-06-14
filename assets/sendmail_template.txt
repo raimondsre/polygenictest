@@ -9,12 +9,12 @@ Content-Type: text/html; charset=utf-8
 $email_html
 
 --nfcoremimeboundary
-Content-Type: image/png;name="raimondsre-polygenictest_logo.png"
+Content-Type: image/png;name="lvbmc-polygenictest_logo.png"
 Content-Transfer-Encoding: base64
 Content-ID: <nfcorepipelinelogo>
-Content-Disposition: inline; filename="raimondsre-polygenictest_logo_light.png"
+Content-Disposition: inline; filename="lvbmc-polygenictest_logo_light.png"
 
-<% out << new File("$projectDir/assets/raimondsre-polygenictest_logo_light.png").
+<% out << new File("$projectDir/assets/lvbmc-polygenictest_logo_light.png").
     bytes.
     encodeBase64().
     toString().

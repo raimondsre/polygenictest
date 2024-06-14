@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/raimondsre/polygenictest/master/assets/schema_input.json",
-    "title": "raimondsre/polygenictest pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/raimondsre/lvbmc-polygenictest/master/assets/schema_input.json",
+    "title": "raimondsre/lvbmc-polygenictest pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
@@ -13,21 +13,21 @@
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "meta": ["id"]
             },
-            "fastq_1": {
+            "trait": {
                 "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "errorMessage": "Trait name or disease has to be provided in second column of input samplesheet"
             },
-            "fastq_2": {
+            "genome_file": {
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "errorMessage": "Individual genome file has to be provided in the thrid column of samplesheet"
+            },
+            "sex": {
+                "type": "integer",
+                "errorMessage": "Fourth column has to provide sex information as integer 1 (male) or 2 (female)"
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "trait","genome_file","sex"]
     }
 }

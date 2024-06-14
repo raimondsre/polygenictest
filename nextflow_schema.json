@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://raw.githubusercontent.com/raimondsre/polygenictest/master/nextflow_schema.json",
-    "title": "raimondsre/polygenictest pipeline parameters",
-    "description": "bioinformatics pipeline that calculates individual polygenic score percentile in the population",
+    "$id": "https://raw.githubusercontent.com/raimondsre/lvbmc-polygenictest/master/nextflow_schema.json",
+    "title": "lvbmc/polygenictest pipeline parameters",
+    "description": "Pipeline to calculate the polygenic risk percentile for a given genome",
     "type": "object",
     "definitions": {
         "input_output_options": {

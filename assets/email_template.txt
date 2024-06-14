@@ -1,10 +1,10 @@
 Run Name: $runName
 
 <% if (success){
-    out << "## raimondsre/polygenictest execution completed successfully! ##"
+    out << "## raimondsre/lvbmc-polygenictest execution completed successfully! ##"
 } else {
     out << """####################################################
-## raimondsre/polygenictest execution completed unsuccessfully! ##
+## raimondsre/lvbmc-polygenictest execution completed unsuccessfully! ##
 ####################################################
 The exit status of the task that caused the workflow execution to fail was: $exitStatus.
 The full error message was:
@@ -27,5 +27,5 @@ Pipeline Configuration:
 <% out << summary.collect{ k,v -> " - $k: $v" }.join("\n") %>
 
 --
-raimondsre/polygenictest
-https://github.com/raimondsre/polygenictest
+raimondsre/lvbmc-polygenictest
+https://github.com/raimondsre/lvbmc-polygenictest

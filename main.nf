@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    raimondsre/polygenictest
+    raimondsre/lvbmc-polygenictest
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/raimondsre/polygenictest
+    Github : https://github.com/raimondsre/lvbmc-polygenictest
 ----------------------------------------------------------------------------------------
 */
 
@@ -19,7 +19,7 @@ include { POLYGENICTEST  } from './workflows/polygenictest'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_polygenictest_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_polygenictest_pipeline'
 
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_polygenictest_pipeline'
+//include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_polygenictest_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,8 +30,8 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_poly
 // TODO nf-core: Remove this line if you don't need a FASTA file
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
-
+//params.fasta = getGenomeAttribute('fasta')
+// params.output_dir = "."
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -41,7 +41,7 @@ params.fasta = getGenomeAttribute('fasta')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow RAIMONDSRE_POLYGENICTEST {
+workflow LVBMC_POLYGENICTEST {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -49,14 +49,14 @@ workflow RAIMONDSRE_POLYGENICTEST {
     main:
 
     //
-    // WORKFLOW: Run pipeline
+    // WORKFLOW: Run pipeline 
     //
     POLYGENICTEST (
         samplesheet
     )
 
     emit:
-    multiqc_report = POLYGENICTEST.out.multiqc_report // channel: /path/to/multiqc_report.html
+    vcf_conversion_report = POLYGENICTEST.out.vcf_conversion_report // channel: /path/to/multiqc_report.html
 
 }
 /*
@@ -85,7 +85,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    RAIMONDSRE_POLYGENICTEST (
+    LVBMC_POLYGENICTEST (
         PIPELINE_INITIALISATION.out.samplesheet
     )
 
@@ -99,7 +99,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        RAIMONDSRE_POLYGENICTEST.out.multiqc_report
+        LVBMC_POLYGENICTEST.out.vcf_conversion_report
     )
 }
 

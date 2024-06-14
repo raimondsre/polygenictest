@@ -17,7 +17,7 @@
                         "size": "Large",
                         "weight": "Bolder",
                         "color": "<% if (success) { %>Good<% } else { %>Attention<%} %>",
-                        "text": "raimondsre/polygenictest v${version} - ${runName}",
+                        "text": "raimondsre/lvbmc-polygenictest v${version} - ${runName}",
                         "wrap": true
                     },
                     {
