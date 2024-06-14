@@ -38,7 +38,7 @@ process VCF_conversion {
         --make-bed \\
         --out ${output}
 
-    #zgrep -v '^#' PGS000869_hmPOS_GRCh38.txt.gz | cut -f1,4,6 | gzip > PGS000869_hmPOS_GRCh38.relabel.txt.gz
+    #  zgrep -v '^#' PGS000869_hmPOS_GRCh38.txt.gz | cut -f1,4,6 | gzip > PGS000869_hmPOS_GRCh38.relabel.txt.gz
     #  scorefile=PGS000869_hmPOS_GRCh38.relabel.txt.gz 
     #  plink2 \
     #  --threads 8 \
