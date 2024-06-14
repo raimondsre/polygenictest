@@ -19,10 +19,10 @@ You will need to create a samplesheet with information about the samples you wou
 The `sample` identifiers have to be the same when you apply different PGS model. Below is an example samplesheet for three polygenic traits to be calculated for sample_1:
 
 ```csv title="samplesheet.csv"
-sample,trait,genome_file
-sample_1,type_2_diabetes,sample_1.vcf
-sample_1,hypercholesterolemia,sample_1.vcf
-sample_1,type_1_diabetes,sample_1.vcf
+sample,trait,genome_file,sex
+sample_1,type_2_diabetes,sample_1.vcf,2
+sample_1,hypercholesterolemia,sample_1.vcf,2
+sample_1,type_1_diabetes,sample_1.vcf,2
 ```
 
 | Column    | Description                                                                                                                                                                            |
@@ -30,6 +30,7 @@ sample_1,type_1_diabetes,sample_1.vcf
 | `sample`  | Custom sample name. Spaces in sample names are automatically converted to underscores (`_`). |
 | `trait` | Trait or disease EFO identificator.                                                             |
 | `genome_file` | File name of the individuals VCF genome.                                                             |
+| `genome_file` | Sex of individuals denotes as numeric 1 (male) or 2 (female).                                                             |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -38,7 +39,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run lvbmc/polygenictest --input ./samplesheet.csv --outdir ./results --genome GRCh37 -profile docker
+nextflow run raimondsre/polygenictest --input ./samplesheet.csv --outdir ./results -profile singularity
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
