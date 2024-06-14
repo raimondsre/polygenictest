@@ -31,6 +31,7 @@ sample_1,type_1_diabetes,sample_1.vcf,2
 | `trait` | Trait or disease EFO identificator.                                                             |
 | `genome_file` | File name of the individuals VCF genome.                                                             |
 | `genome_file` | Sex of individuals denotes as numeric 1 (male) or 2 (female).                                                             |
+| `sex` | Sex of individuals denotes as numeric 1 (male) or 2 (female).                                                             |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
