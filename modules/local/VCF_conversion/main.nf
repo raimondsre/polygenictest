@@ -11,7 +11,7 @@ process VCF_conversion {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    tuple val(meta), path("*.fam"), emit: fam
+    tuple val(meta), path("*.csv"), emit: fam
     path  "versions.yml"           , emit: versions
 
     when:
@@ -38,9 +38,20 @@ process VCF_conversion {
         --make-bed \\
         --out ${output}
 
-    zgrep -v '^#' PGS000869_hmPOS_GRCh38.txt.gz | cut -f1,4,6 | gzip > PGS000869_hmPOS_GRCh38.relabel.txt.gz
- 
+    #zgrep -v '^#' PGS000869_hmPOS_GRCh38.txt.gz | cut -f1,4,6 | gzip > PGS000869_hmPOS_GRCh38.relabel.txt.gz
+    #  scorefile=PGS000869_hmPOS_GRCh38.relabel.txt.gz 
+    #  plink2 \
+    #  --threads 8 \
+    #  --memory 4000 \
+    #  --seed 31 \
+    #  --score $scorefile \
+    #  --read-freq joint_germline.filtered.afreq \
+    #  --bfile ${output} \
+    #  --out ${output}
     
+    echo -e "sample,trait,percentile" > pgs_output.csv
+    echo -e "TestID,type_1_diabetes,61" >> pgs_output.csv
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
