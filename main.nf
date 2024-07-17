@@ -1,51 +1,51 @@
 #!/usr/bin/env nextflow
 //Updates for integration with calculator platform START
-project_dir = projectDir
-//Run this script to notify the platform that task execution has started
-def startProc = "${project_dir}/started.sh".execute()
-def sb = new StringBuffer()
-startProc.consumeProcessErrorStream(sb)
-println startProc.text
-println sb.toString()
+// project_dir = projectDir
+// //Run this script to notify the platform that task execution has started
+// def startProc = "${project_dir}/started.sh".execute()
+// def sb = new StringBuffer()
+// startProc.consumeProcessErrorStream(sb)
+// println startProc.text
+// println sb.toString()
 
 
-startProc = "${project_dir}/build_input.sh".execute()
-sb = new StringBuffer()
-startProc.consumeProcessErrorStream(sb)
-println startProc.text 
-println sb.toString()
+// startProc = "${project_dir}/build_input.sh".execute()
+// sb = new StringBuffer()
+// startProc.consumeProcessErrorStream(sb)
+// println startProc.text 
+// println sb.toString()
 
-workflow.onComplete {
-    startProc = "${project_dir}/build_output.sh".execute()
-    sb = new StringBuffer()
-    startProc.consumeProcessErrorStream(sb)
-    println startProc.text
-    println sb.toString()
+// workflow.onComplete {
+//     startProc = "${project_dir}/build_output.sh".execute()
+//     sb = new StringBuffer()
+//     startProc.consumeProcessErrorStream(sb)
+//     println startProc.text
+//     println sb.toString()
 
-    println "Pipeline completed at: $workflow.complete"
-    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
-    f = new File("${projectDir}/status.txt")
-    f.append("\nPipeline completed at: $workflow.complete")
-    f.append("\nExecution status: ${ workflow.success ? 'OK' : 'failed' }")
+//     println "Pipeline completed at: $workflow.complete"
+//     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+//     f = new File("${projectDir}/status.txt")
+//     f.append("\nPipeline completed at: $workflow.complete")
+//     f.append("\nExecution status: ${ workflow.success ? 'OK' : 'failed' }")
 
-    def proc = "${project_dir}/completed.sh".execute()
-    def b = new StringBuffer()
-    proc.consumeProcessErrorStream(b)
-    println proc.text
-    println b.toString()
-}
+//     def proc = "${project_dir}/completed.sh".execute()
+//     def b = new StringBuffer()
+//     proc.consumeProcessErrorStream(b)
+//     println proc.text
+//     println b.toString()
+// }
 
-workflow.onError {
-    println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
-    f = new File("${projectDir}/status.txt")
-    f.append("\nError: Pipeline execution stopped with the following message: ${workflow.errorMessage}")
+// workflow.onError {
+//     println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
+//     f = new File("${projectDir}/status.txt")
+//     f.append("\nError: Pipeline execution stopped with the following message: ${workflow.errorMessage}")
 
-    def proc = "${project_dir}/failed.sh".execute()
-    def b = new StringBuffer()
-    proc.consumeProcessErrorStream(b)
-    println proc.text
-    println b.toString()
-}
+//     def proc = "${project_dir}/failed.sh".execute()
+//     def b = new StringBuffer()
+//     proc.consumeProcessErrorStream(b)
+//     println proc.text
+//     println b.toString()
+// }
 
 //Updates for integration with calculator platform END
 /*
