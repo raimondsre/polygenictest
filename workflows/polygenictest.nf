@@ -5,7 +5,7 @@
 */
 
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { VCF_validation         } from '../modules/local/VCF_conversion/main'
+include { VCF_validation         } from '../modules/local/VCF_validation/main'
 //include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
