@@ -37,9 +37,9 @@ process VCF_validation {
         --split-par 2781479 155701383 \\
         --make-bed \\
         --out ${output}
-    
+
     echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "TestID,type_1_diabetes,61" >> pgs_output.csv
+    echo -e "${meta},${trait},61" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
