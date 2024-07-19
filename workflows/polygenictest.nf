@@ -5,7 +5,7 @@
 */
 
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { VCF_conversion                 } from '../modules/local/VCF_conversion/main'
+include { VCF_validation         } from '../modules/local/VCF_conversion/main'
 //include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -28,15 +28,15 @@ workflow POLYGENICTEST {
     ch_versions = Channel.empty()
 
     //
-    // MODULE: Run VCF_conversion
+    // MODULE: Run VCF_validation
     //
-    VCF_conversion (
+    VCF_validation (
         ch_samplesheet
     )
-    ch_versions = ch_versions.mix(VCF_conversion.out.versions.first())
+    ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
 
     emit:
-    vcf_conversion_report = VCF_conversion.out.fam.toList() // channel: /path/to/multiqc_report.html
+    VCF_validation_report = VCF_validation.out.fam.toList() // channel: /path/to/multiqc_report.html
     
     //
     // Collate and save software versions
