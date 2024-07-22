@@ -19,7 +19,7 @@ process VCF_homogenisation {
     task.ext.when == null || task.ext.when 
 
     script: 
-    def prefix = task.ext.prefix ?: "VCF_conversion"
+    def prefix = task.ext.prefix ?: "VCF_homogenisation"
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
@@ -33,7 +33,7 @@ process VCF_homogenisation {
         --set-all-var-ids '@:#:$r:$a' \
         --max-alleles 2 \
         --var-id-multi @:# \
-        --vcf ${input_plink} \
+        --vcf ${genome_file} \
         --recode vcf \
         --out ${output}
 
