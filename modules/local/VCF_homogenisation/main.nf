@@ -12,7 +12,7 @@ process VCF_homogenisation {
 
     output:
     //path("*.csv"), emit: fam
-    tuple val(meta), val(trait), file(genome_file), val(sex), emit: main_variables
+    tuple val(meta), val(trait), file("${output}.vcf"), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
     when:
@@ -23,7 +23,7 @@ process VCF_homogenisation {
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
-    output = "${meta}_${trait}_${prefix}"
+    output = "${trait}_${prefix}"
     """
     plink2 \
         --threads 2 \
