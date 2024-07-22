@@ -11,7 +11,7 @@ process PLINK_sscore {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    path("*.sscore"), emit: sscore
+    path("${output}.sscore"), emit: sscore
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
