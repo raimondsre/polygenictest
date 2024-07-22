@@ -26,9 +26,20 @@ process VCF_homogenisation {
     output = "${trait}_${prefix}"
     """
     
-
-    echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},61" >> pgs_output.csv
+    plink2 \
+        --threads 2 \
+        --memory 16384 \
+        --missing vcols=fmissdosage,fmiss \
+        --new-id-max-allele-len 100 missing --allow-extra-chr \
+        --set-all-var-ids '@:#:$r:$a' \
+        --max-alleles 2 \
+        --var-id-multi @:# \
+        --vcf ${genome_file} \
+        --recode vcf \
+        --out ${output}
+        
+    # echo -e "sample,trait,percentile" > pgs_output.csv
+    # echo -e "${meta},${trait},61" >> pgs_output.csv
 
 
     cat <<-END_VERSIONS > versions.yml
