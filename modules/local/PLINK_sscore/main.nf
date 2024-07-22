@@ -1,5 +1,5 @@
-process VCF_validation {
-    tag "VCF_validation"
+process PLINK_sscore {
+    tag "PLINK_sscore"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
