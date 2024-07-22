@@ -1,5 +1,5 @@
-process PLINK_sscore {
-    tag "PLINK_sscore"
+process VCF_validation {
+    tag "VCF_validation"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -11,34 +11,31 @@ process PLINK_sscore {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    path("*.csv"), emit: fam
-    //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
+    //path("*.csv"), emit: fam
+    tuple val(meta), val(trait), path(${output}".vcf"), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when 
 
     script: 
-    def prefix = task.ext.prefix ?: "PLINK_sscore"
+    def prefix = task.ext.prefix ?: "VCF_conversion"
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${meta}_${trait}_${prefix}"
     """
-    plink2 --vcf ${genome_file} --make-bed --out ${output}
     plink2 \
-      --threads 2 \
-      --memory 16384 \
-      --seed 31 \
-      --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \
-      --allow-extra-chr \
-      --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \
-      --vcf ${output} \
-      --out ${output}
-    # Determine reference build
-
-    echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},61" >> pgs_output.csv
+        --threads 2 \
+        --memory 16384 \
+        --missing vcols=fmissdosage,fmiss \
+        --new-id-max-allele-len 100 missing --allow-extra-chr \
+        --set-all-var-ids '@:#:$r:$a' \
+        --max-alleles 2 \
+        --var-id-multi @:# \
+        --vcf ${input_plink} \
+        --recode vcf \
+        --out ${output}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -35,10 +35,15 @@ workflow POLYGENICTEST {
         ch_samplesheet
     )
     ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
-    main_variables = VCF_validation.out.main_variables
+    main_variables_for_VCF_homogenisation = VCF_validation.out.main_variables
     
+    VCF_homogenisation (
+        main_variables_for_VCF_homogenisation
+    )
+    main_variables_for_PLINK_sscore_generation = VCF_homogenisation.out.main_variables
+
     PLINK_sscore (
-        main_variables
+        main_variables_for_PLINK_sscore_generation
     )
 
     emit:
