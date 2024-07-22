@@ -25,8 +25,8 @@ process VCF_PGS_post_processing {
     
     cat ${plink_sscore} >  plink.sscore
 
-    echo "plink_score='plink.sscore'\\niid=${iid}" >> .Renviron
-    Rscript -e "library(dplyr); library(data.table); a <- fread('plink.sscore'); a; a %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
+    echo "plink_score='plink.sscore'\\niid=${iid}\\nhomogenised_file='/home_beegfs/bioms02/references/PGS001296-run_pgs.txt.gz'" >> .Renviron
+    Rscript -e "library(dplyr); library(data.table); a <- fread(Sys.getenv('nhomogenised_file')); a; a %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
