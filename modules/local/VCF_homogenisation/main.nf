@@ -26,17 +26,18 @@ process VCF_homogenisation {
     output = "${trait}_${prefix}"
     """
     echo -e "0\\t${meta}\\t${sex}" > sex.fam
-    plink2 \
-        --threads 2 \
-        --memory 16384 \
-        --missing vcols=fmissdosage,fmiss \
-        --new-id-max-allele-len 100 missing --allow-extra-chr \
-        --set-all-var-ids '@:#:\$r:\$a' \
-        --max-alleles 2 \
-        --var-id-multi @:# \
+    plink2 \\
+        --threads 2 \\
+        --memory 16384 \\
+        --missing vcols=fmissdosage,fmiss \\
+        --new-id-max-allele-len 100 missing --allow-extra-chr \\
+        --set-all-var-ids '@:#:\$r:\$a' \\
+        --max-alleles 2 \\
+        --var-id-multi @:# \\
         --update-sex sex.fam \\
-        --vcf ${genome_file} \
-        --recode vcf \
+        --split-par 2781479 155701383 \\
+        --vcf ${genome_file} \\
+        --recode vcf \\
         --out ${output}
         
     # echo -e "sample,trait,percentile" > pgs_output.csv
