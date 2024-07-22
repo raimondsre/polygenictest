@@ -48,7 +48,7 @@ workflow POLYGENICTEST {
     )
 
     emit:
-    VCF_validation_report = PLINK_sscore.out.fam.toList() // channel: /path/to/multiqc_report.html
+    VCF_validation_report = PLINK_sscore.out.sscore.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 

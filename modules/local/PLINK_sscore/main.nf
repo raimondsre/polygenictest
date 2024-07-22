@@ -11,7 +11,7 @@ process PLINK_sscore {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    path("*.csv"), emit: fam
+    path("*.sscore"), emit: sscore
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -26,16 +26,16 @@ process PLINK_sscore {
     output = "${meta}_${trait}_${prefix}"
     """
     echo -e "0\\t${meta}\\t${sex}" > sex.fam
-    plink2 \
-      --threads 2 \
-      --memory 16384 \
-      --seed 31 \
-      --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \
-      --allow-extra-chr \
+    plink2 \\
+      --threads 2 \\
+      --memory 16384 \\
+      --seed 31 \\
+      --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \\
+      --allow-extra-chr \\
       --update-sex sex.fam \\
       --split-par 2781479 155701383 \\
-      --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \
-      --vcf ${genome_file} \
+      --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \\
+      --vcf ${genome_file} \\
       --out ${output}
     # Determine reference build
 
