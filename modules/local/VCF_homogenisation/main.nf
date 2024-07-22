@@ -1,5 +1,5 @@
-process VCF_validation {
-    tag "VCF_validation"
+process VCF_homogenisation {
+    tag "VCF_homogenisation"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
