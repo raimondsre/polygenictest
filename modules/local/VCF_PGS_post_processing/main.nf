@@ -2,8 +2,6 @@ process VCF_PGS_post_processing {
     tag "PGS_post_processing"
     label 'process_medium'
 
-    conda "${moduleDir}/environment.yml"
-
     input:
     tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
 
