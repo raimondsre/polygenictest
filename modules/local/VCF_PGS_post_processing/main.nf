@@ -24,7 +24,7 @@ process VCF_PGS_post_processing {
     less /home_beegfs/bioms02/references/PGS001296-run_pgs.txt.gz > homogenised_file
     less ${plink_sscore} > plink_score_file
     cat plink_score_file
-    Rscript -e "library(dplyr); library(data.table); fread('homogenised_file') %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% fwrite('percentile_calculated.txt',sep='\\t')"
+    Rscript -e "library(dplyr); library(data.table); sscore <- fread("plink_score_file") %>% mutate(sampleset = "new_file") %>% select(sampleset,IID=`#IID`,SUM=PGS001296_hmPOS_GRCh38_SUM); fread('homogenised_file') %>% select(sampleset,IID,SUM) %>% cbind(sscore) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% fwrite('percentile_calculated.txt',sep='\\t')"
     
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
