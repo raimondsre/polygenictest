@@ -8,7 +8,7 @@ process PLINK_sscore {
         'biocontainers/plink2:2.00a5--h4ac6f70_0' }"
 
     input:
-    tuple val(meta), val(trait), path(genome_file), val(sex)
+    tuple val(meta), val(trait), path(genome_file), val(sex) from main_variables
 
     output:
     path("*.csv"), emit: fam
