@@ -25,6 +25,8 @@ process VCF_validation {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${meta}_${trait}_${prefix}"
     """
+    iid=\$(awk '{print \$2}' ${output}.fam)
+    
     echo -e "0\\t${iid}\\t${sex}" > sex.fam 
     plink2 \\
         --threads $task.cpus \\
@@ -39,8 +41,6 @@ process VCF_validation {
         --make-bed \\
         --out ${output}
     
-    iid=\$(awk '{print \$2}' ${output}.fam)
-
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
