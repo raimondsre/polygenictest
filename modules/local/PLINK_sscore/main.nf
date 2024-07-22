@@ -25,7 +25,6 @@ process PLINK_sscore {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${meta}_${trait}_${prefix}"
     """
-    plink2 --vcf ${genome_file} --make-bed --out ${output}
     plink2 \
       --threads 2 \
       --memory 16384 \
@@ -35,7 +34,7 @@ process PLINK_sscore {
       --update-sex sex.fam \\
       --split-par 2781479 155701383 \\
       --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \
-      --vcf ${output} \
+      --vcf ${genome_file} \
       --out ${output}
     # Determine reference build
 
