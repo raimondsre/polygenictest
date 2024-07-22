@@ -31,7 +31,7 @@ process VCF_PGS_post_processing {
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
     echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},${pgs_score}" >> pgs_output.csv
+    echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
