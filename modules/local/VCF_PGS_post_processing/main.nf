@@ -29,7 +29,7 @@ process VCF_PGS_post_processing {
     echo "plink_score=${plink_sscore}\\niid=${iid}" >> .Renviron
     Rscript -e "library(data.table); library(dplyr); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
-    pgs_score=$(awk 'BEGIN{FS="\t"} {print \$10}' percentile_calculated.txt | tail -n1)
+    pgs_score=\$(awk 'BEGIN{FS="\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
     echo -e "sample,trait,percentile" > pgs_output.csv
     echo -e "${meta},${trait},${pgs_score}" >> pgs_output.csv

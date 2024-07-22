@@ -71,7 +71,7 @@ workflow POLYGENICTEST {
             newLine: true
         ).set { ch_collated_versions }
 
-    //
+    //   
     // MODULE: MultiQC
     //
     // ch_multiqc_config        = Channel.fromPath(

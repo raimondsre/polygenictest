@@ -12,7 +12,7 @@ process VCF_validation {
 
     output:
     //path("*.csv"), emit: fam
-    tuple val(meta), val(trait), path(genome_file), val(sex), env(iid) emit: main_variables
+    tuple val(meta), val(trait), path(genome_file), val(sex), env(iid), emit: main_variables
     path  "versions.yml", emit: versions
 
     when:

@@ -12,7 +12,7 @@ process VCF_homogenisation {
 
     output:
     //path("*.csv"), emit: fam
-    tuple val(meta), val(trait), file("${output}.vcf"), val(sex), val(iid) emit: main_variables
+    tuple val(meta), val(trait), file("${output}.vcf"), val(sex), val(iid), emit: main_variables
     path  "versions.yml", emit: versions
 
     when:
