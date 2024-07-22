@@ -23,7 +23,7 @@ process VCF_PGS_post_processing {
     """
     module load R
     
-    echo ${plink_sscore} >  plink.sscore
+    head ${plink_sscore} >  plink.sscore
 
     echo "plink_score='plink.sscore'\\niid=${iid}" >> .Renviron
     Rscript -e "library(dplyr); library(data.table); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
