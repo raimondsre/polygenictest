@@ -11,7 +11,7 @@ process VCF_PLINK_sscore {
     tuple val(meta), val(trait), path(genome_file), val(sex), val(iid)
 
     output:
-    tuple val(meta), val(trait), path("${output}.sscore"), val(sex), val(iid), emit: main_variables
+    tuple val(meta), val(trait), file("${output}.sscore"), val(sex), val(iid), emit: main_variables
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -23,7 +23,7 @@ process VCF_PLINK_sscore {
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
-    output = "${meta}_${trait}_${prefix}"
+    output = "${iid}_${trait}_${prefix}"
     """
     echo -e "0\\t${meta}\\t${sex}" > sex.fam
     plink2 \\
