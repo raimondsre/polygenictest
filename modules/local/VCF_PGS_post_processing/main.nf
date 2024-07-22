@@ -8,7 +8,7 @@ process VCF_PGS_post_processing {
     tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
 
     output:
-    path("plink.sscore"), emit: sscore_percentiles
+    path("pgs_output.csv"), emit: sscore_percentiles
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -23,15 +23,15 @@ process VCF_PGS_post_processing {
     """
     module load R
     
-    head ${plink_sscore} >  plink.sscore
+    cat ${plink_sscore} >  plink.sscore
 
-    #echo "plink_score='plink.sscore'\\niid=${iid}" >> .Renviron
-    #Rscript -e "library(dplyr); library(data.table); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
+    echo "plink_score='plink.sscore'\\niid=${iid}" >> .Renviron
+    Rscript -e "library(dplyr); library(data.table); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
-    #pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
+    pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
     echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "2,3,4" >> pgs_output.csv
+    echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
