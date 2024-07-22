@@ -39,9 +39,9 @@ process PLINK_sscore {
       --out ${output}
     # Determine reference build
 
-    echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},61" >> pgs_output.csv
-
+    # echo -e "sample,trait,percentile" > pgs_output.csv
+    # echo -e "${meta},${trait},61" >> pgs_output.csv
+    cp ${output}.sscore ${output}.sscore_replica
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
