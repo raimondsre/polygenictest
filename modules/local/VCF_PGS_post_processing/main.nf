@@ -11,7 +11,7 @@ process VCF_PGS_post_processing {
     tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
 
     output:
-    path("*.csv"), emit: sscore_percentiles
+    path("pgs_output.csv"), emit: sscore_percentiles
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 

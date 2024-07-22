@@ -4,15 +4,17 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
-include { VCF_validation         } from '../modules/local/VCF_validation/main'
-include { VCF_homogenisation     } from '../modules/local/VCF_homogenisation/main'
-include { VCF_PLINK_sscore       } from '../modules/local/VCF_PLINK_sscore/main'
-//include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { paramsSummaryMap       } from 'plugin/nf-validation'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_polygenictest_pipeline'
+include { FASTQC                  } from '../modules/nf-core/fastqc/main'
+include { VCF_validation          } from '../modules/local/VCF_validation/main'
+include { VCF_homogenisation      } from '../modules/local/VCF_homogenisation/main'
+include { VCF_PLINK_sscore        } from '../modules/local/VCF_PLINK_sscore/main'
+include { VCF_PGS_post_processing } from '../modules/local/VCF_PGS_post_processing/main'
+
+//include { MULTIQC               } from '../modules/nf-core/multiqc/main'
+include { paramsSummaryMap        } from 'plugin/nf-validation'
+include { paramsSummaryMultiqc    } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML  } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText  } from '../subworkflows/local/utils_nfcore_polygenictest_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,9 +50,12 @@ workflow POLYGENICTEST {
     )
     PLINK_sscore_file = VCF_PLINK_sscore.out.sscore
 
+    VCF_PGS_post_processing (
+        PLINK_sscore_file
+    )
 
     emit:
-    VCF_PLINK_sscore_report = PLINK_sscore_file.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = VCF_PGS_post_processing.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 
