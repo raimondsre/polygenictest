@@ -26,8 +26,8 @@ process VCF_validation {
     output = "${meta}_${trait}_${prefix}"
     """
     iid=\$(awk '{print \$2}' ${output}.fam)
-    
-    echo -e "0\\t${iid}\\t${sex}" > sex.fam 
+
+    echo -e "0\\t\${iid}\\t${sex}" > sex.fam 
     plink2 \\
         --threads $task.cpus \\
         --memory $mem \\
