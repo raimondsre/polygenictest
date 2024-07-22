@@ -48,7 +48,7 @@ workflow POLYGENICTEST {
     VCF_PLINK_sscore (
         main_variables_for_PLINK_sscore_generation
     )
-    PLINK_sscore_file = VCF_PLINK_sscore.out.sscore
+    PLINK_sscore_file = VCF_PLINK_sscore.out.main_variables
 
     VCF_PGS_post_processing (
         PLINK_sscore_file
