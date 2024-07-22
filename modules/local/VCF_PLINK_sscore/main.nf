@@ -11,7 +11,7 @@ process VCF_PLINK_sscore {
     tuple val(meta), val(trait), path(genome_file), val(sex), val(iid)
 
     output:
-    tuple val(meta), val(trait), file("${output}.sscore"), val(sex), val(iid), emit: main_variables
+    tuple val(meta), val(trait), path("${output}.sscore"), val(sex), val(iid), emit: main_variables
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 

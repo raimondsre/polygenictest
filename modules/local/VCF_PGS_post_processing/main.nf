@@ -5,7 +5,7 @@ process VCF_PGS_post_processing {
     conda "${moduleDir}/environment.yml"
 
     input:
-    tuple val(meta), val(trait), file(plink_sscore), val(sex), val(iid)
+    tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
 
     output:
     path("pgs_output.csv"), emit: sscore_percentiles
