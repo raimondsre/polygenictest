@@ -38,9 +38,9 @@ workflow POLYGENICTEST {
     emit:
     VCF_validation_report = VCF_validation.out.fam.toList() // channel: /path/to/multiqc_report.html
     
-    VCF_conversion (
-        
-    )
+    // VCF_conversion (
+
+    // )
     //
     // Collate and save software versions
     //
