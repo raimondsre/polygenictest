@@ -3,9 +3,6 @@ process VCF_PGS_post_processing {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/plink2%3A2.00a5.10--h4ac6f70_0' :
-        'biocontainers/plink2:2.00a5--h4ac6f70_0' }"
 
     input:
     tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
@@ -26,7 +23,7 @@ process VCF_PGS_post_processing {
     """
     module load R
     echo "plink_score=${plink_sscore}\\niid=${iid}" >> .Renviron
-    Rscript -e "library(data.table); library(dplyr); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
+    Rscript -e "library(dplyr); library(data.table); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
