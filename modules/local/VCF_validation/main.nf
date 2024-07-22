@@ -12,7 +12,7 @@ process VCF_validation {
 
     output:
     //path("*.csv"), emit: fam
-    tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
+    tuple val(meta), val(trait), path(genome_file), val(sex), env(iid) emit: main_variables
     path  "versions.yml", emit: versions
 
     when:
@@ -38,10 +38,8 @@ process VCF_validation {
         --split-par 2781479 155701383 \\
         --make-bed \\
         --out ${output}
-    # Determine reference build
-
-    # echo -e "sample,trait,percentile" > pgs_output.csv
-    # echo -e "${meta},${trait},61" >> pgs_output.csv
+    
+    iid=$(awk '{print \$2}' ${output}.fam)
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

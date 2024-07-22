@@ -8,11 +8,11 @@ process VCF_homogenisation {
         'biocontainers/plink2:2.00a5--h4ac6f70_0' }"
 
     input:
-    tuple val(meta), val(trait), path(genome_file), val(sex)
+    tuple val(meta), val(trait), path(genome_file), val(sex), val(iid)
 
     output:
     //path("*.csv"), emit: fam
-    tuple val(meta), val(trait), file("${output}.vcf"), val(sex), emit: main_variables
+    tuple val(meta), val(trait), file("${output}.vcf"), val(sex), val(iid) emit: main_variables
     path  "versions.yml", emit: versions
 
     when:

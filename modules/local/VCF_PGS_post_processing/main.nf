@@ -1,5 +1,5 @@
-process VCF_PLINK_sscore {
-    tag "PLINK_sscore"
+process VCF_PGS_post_processing {
+    tag "PGS_post_processing"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -8,10 +8,10 @@ process VCF_PLINK_sscore {
         'biocontainers/plink2:2.00a5--h4ac6f70_0' }"
 
     input:
-    tuple val(meta), val(trait), path(genome_file), val(sex), val(iid)
+    tuple val(meta), val(trait), path(plink_sscore), val(sex), val(iid)
 
     output:
-    tuple val(meta), val(trait), path("${output}.sscore"), val(sex), val(iid) emit: main_variables
+    path("*.csv"), emit: sscore_percentiles
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -25,18 +25,14 @@ process VCF_PLINK_sscore {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${meta}_${trait}_${prefix}"
     """
-    echo -e "0\\t${meta}\\t${sex}" > sex.fam
-    plink2 \\
-      --threads 2 \\
-      --memory 16384 \\
-      --seed 31 \\
-      --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \\
-      --allow-extra-chr \\
-      --update-sex sex.fam \\
-      --split-par 2781479 155701383 \\
-      --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \\
-      --vcf ${genome_file} \\
-      --out ${output}
+    module load R
+    echo "plink_score=${plink_sscore}\\niid=${iid}" >> .Renviron
+    Rscript -e "library(data.table); library(dplyr); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
+    
+    pgs_score=$(awk 'BEGIN{FS="\t"} {print \$10}' percentile_calculated.txt | tail -n1)
+
+    echo -e "sample,trait,percentile" > pgs_output.csv
+    echo -e "${meta},${trait},${pgs_score}" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
