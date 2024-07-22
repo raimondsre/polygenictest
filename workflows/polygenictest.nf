@@ -46,9 +46,11 @@ workflow POLYGENICTEST {
     VCF_PLINK_sscore (
         main_variables_for_PLINK_sscore_generation
     )
+    PLINK_sscore_file = VCF_PLINK_sscore.out.sscore
+
 
     emit:
-    VCF_PLINK_sscore_report = VCF_PLINK_sscore.out.sscore.toList() // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = PLINK_sscore_file.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 
