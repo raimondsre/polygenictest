@@ -22,7 +22,7 @@ process VCF_PGS_post_processing {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     """
     module load R
-    cp ${plink_sscore} > ${plink_sscore}
+    cp ${plink_sscore} ${plink_sscore}
     echo "plink_score=${plink_sscore}\\niid=${iid}" >> .Renviron
     Rscript -e "library(dplyr); library(data.table); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
