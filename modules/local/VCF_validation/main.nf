@@ -30,7 +30,7 @@ process VCF_validation {
         --threads $task.cpus \\
         --memory $mem \\
         --new-id-max-allele-len 40 missing \\
-        --max-alleles 2 \\
+        --max-alleles 2 \\ 
         --missing vcols=fmissdosage,fmiss \\
         --vcf $genome_file \\
         --allow-extra-chr \\
