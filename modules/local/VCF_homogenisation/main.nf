@@ -25,7 +25,21 @@ process VCF_homogenisation {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${trait}_${prefix}"
     """
-    plink2 \
+    
+
+    echo -e "sample,trait,percentile" > pgs_output.csv
+    echo -e "${meta},${trait},61" >> pgs_output.csv
+
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
+    END_VERSIONS
+    """
+}
+
+/*
+plink2 \
         --threads 2 \
         --memory 16384 \
         --missing vcols=fmissdosage,fmiss \
@@ -36,10 +50,4 @@ process VCF_homogenisation {
         --vcf ${genome_file} \
         --recode vcf \
         --out ${output}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
-    END_VERSIONS
-    """
-}
+*/
