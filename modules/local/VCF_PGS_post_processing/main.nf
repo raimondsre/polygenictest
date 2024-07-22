@@ -23,13 +23,12 @@ process VCF_PGS_post_processing {
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
-    output = "${meta}_${trait}_${prefix}"
     """
     module load R
     echo "plink_score=${plink_sscore}\\niid=${iid}" >> .Renviron
     Rscript -e "library(data.table); library(dplyr); fread(Sys.getenv('plink_score')) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep=='\\t')"
     
-    pgs_score=\$(awk 'BEGIN{FS="\t"} {print \$10}' percentile_calculated.txt | tail -n1)
+    pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
 
     echo -e "sample,trait,percentile" > pgs_output.csv
     echo -e "${meta},${trait},${pgs_score}" >> pgs_output.csv
