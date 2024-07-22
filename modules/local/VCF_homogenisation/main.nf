@@ -25,7 +25,7 @@ process VCF_homogenisation {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${trait}_${prefix}"
     """
-    echo -e "0\\t${meta}\\t${sex}" > sex.fam
+    echo -e "0\\t${iid}\\t${sex}" > sex.fam
     plink2 \\
         --threads 2 \\
         --memory 16384 \\
