@@ -6,6 +6,7 @@
 
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
 include { VCF_validation         } from '../modules/local/VCF_validation/main'
+include { PLINK_sscore           } from '../modules/local/PLINK_sscore/main'
 //include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -35,8 +36,11 @@ workflow POLYGENICTEST {
     )
     ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
 
+    PLINK_sscore (
+        main_variables
+    )
     emit:
-    VCF_validation_report = VCF_validation.out.fam.toList() // channel: /path/to/multiqc_report.html
+    VCF_validation_report = PLINK_sscore.out.fam.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 

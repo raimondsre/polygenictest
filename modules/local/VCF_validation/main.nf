@@ -11,7 +11,7 @@ process VCF_validation {
     tuple val(meta), val(trait), path(genome_file), val(sex)
 
     output:
-    path("*.csv"), emit: fam
+    //path("*.csv"), emit: fam
     tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -40,8 +40,8 @@ process VCF_validation {
         --out ${output}
     # Determine reference build
 
-    echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},61" >> pgs_output.csv
+    # echo -e "sample,trait,percentile" > pgs_output.csv
+    # echo -e "${meta},${trait},61" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
