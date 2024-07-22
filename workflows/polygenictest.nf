@@ -23,6 +23,7 @@ workflow POLYGENICTEST {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
+    main_variables
 
     main:
 
