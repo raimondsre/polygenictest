@@ -7,7 +7,7 @@
 include { FASTQC                 } from '../modules/nf-core/fastqc/main'
 include { VCF_validation         } from '../modules/local/VCF_validation/main'
 include { VCF_homogenisation     } from '../modules/local/VCF_homogenisation/main'
-include { PLINK_sscore           } from '../modules/local/PLINK_sscore/main'
+include { VCF_PLINK_sscore       } from '../modules/local/VCF_PLINK_sscore/main'
 //include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -43,12 +43,12 @@ workflow POLYGENICTEST {
     )
     main_variables_for_PLINK_sscore_generation = VCF_homogenisation.out.main_variables
 
-    PLINK_sscore (
+    VCF_PLINK_sscore (
         main_variables_for_PLINK_sscore_generation
     )
 
     emit:
-    VCF_validation_report = PLINK_sscore.out.sscore.toList() // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = VCF_PLINK_sscore.out.sscore.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 

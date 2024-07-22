@@ -105,7 +105,7 @@ workflow LVBMC_POLYGENICTEST {
     )
 
     emit:
-    VCF_validation_report = POLYGENICTEST.out.VCF_validation_report // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = POLYGENICTEST.out.VCF_PLINK_sscore_report // channel: /path/to/multiqc_report.html
 
 }
 /*
@@ -148,7 +148,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        LVBMC_POLYGENICTEST.out.VCF_validation_report
+        LVBMC_POLYGENICTEST.out.VCF_PLINK_sscore_report
     )
 }
 

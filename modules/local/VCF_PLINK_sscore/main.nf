@@ -1,4 +1,4 @@
-process PLINK_sscore {
+process VCF_PLINK_sscore {
     tag "PLINK_sscore"
     label 'process_medium'
 
