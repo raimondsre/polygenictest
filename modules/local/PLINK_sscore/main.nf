@@ -32,6 +32,8 @@ process PLINK_sscore {
       --seed 31 \
       --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \
       --allow-extra-chr \
+      --update-sex sex.fam \\
+      --split-par 2781479 155701383 \\
       --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \
       --vcf ${output} \
       --out ${output}
