@@ -21,8 +21,7 @@ process VCF_PGS_post_processing {
     """  
     module load R 
     
-    cat ${plink_sscore} >  plink.sscore
-    /home_beegfs/bioms02/references/PGS001296-run_pgs.txt.gz > homogenised_file
+    less /home_beegfs/bioms02/references/PGS001296-run_pgs.txt.gz > homogenised_file
     echo -e "iid=${iid}" > .Renviron
     Rscript -e "library(dplyr); library(data.table); a <- fread('homogenised_file'); a; a %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(IID == Sys.getenv('iid')) %>% fwrite('percentile_calculated.txt',sep='\\t')"
     
