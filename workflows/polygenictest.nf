@@ -35,10 +35,12 @@ workflow POLYGENICTEST {
         ch_samplesheet
     )
     ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
-
-    PLINK_sscore (
-    )
+    main_variables = VCF_validation.out.main_variables
     
+    PLINK_sscore (
+        main_variables
+    )
+
     emit:
     VCF_validation_report = PLINK_sscore.out.fam.toList() // channel: /path/to/multiqc_report.html
     
