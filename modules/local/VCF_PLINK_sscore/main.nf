@@ -34,7 +34,7 @@ process VCF_PLINK_sscore {
       --allow-extra-chr \\
       --update-sex sex.fam \\
       --split-par 2781479 155701383 \\
-      --score /home_beegfs/bioms02/references/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \\
+      --score ${projectDir}/assets/PGS001296-run_ALL_additive_0.scorefile.gz header-read cols=+scoresums,+denom,-fid list-variants \\
       --vcf ${genome_file} \\
       --out ${output}
 

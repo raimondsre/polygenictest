@@ -21,7 +21,7 @@ process VCF_PGS_post_processing {
     """  
     module load R/R-4.3.2  
     
-    less /home_beegfs/bioms02/references/PGS001296-run_pgs.txt.gz > homogenised_file
+    less ${projectDir}/assets/PGS001296-run_pgs.txt.gz > homogenised_file
     cp ${plink_sscore} plink_score_file
     cat plink_score_file 
     echo -e "#!/usr/bin/env Rscript" > to_execute.R; 
