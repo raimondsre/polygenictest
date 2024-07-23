@@ -9,7 +9,7 @@ process VCF_validation {
 
     input:
     tuple val(meta), val(trait), path(genome_file), val(sex)
-    file(scorefile)
+    // file(scorefile)
 
     output:
     //path("*.csv"), emit: fam
