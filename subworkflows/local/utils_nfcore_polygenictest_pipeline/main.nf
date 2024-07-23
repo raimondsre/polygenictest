@@ -94,7 +94,7 @@ workflow PIPELINE_INITIALISATION {
     emit:
     samplesheet = ch_samplesheet
     versions    = ch_versions
-    scorefile   = ch_scorefile
+    // scorefile   = ch_scorefile
 }
 
 /*
