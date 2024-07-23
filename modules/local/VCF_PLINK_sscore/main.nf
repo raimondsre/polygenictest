@@ -30,7 +30,7 @@ process VCF_PLINK_sscore {
       --threads 2 \\
       --memory 16384 \\
       --seed 31 \\
-      --read-freq /home_beegfs/bioms02/references/PGS001296-run.afreq_ALL_relabelled.gz \\
+      --read-freq ${projectDir}/assets/PGS001296-run.afreq_ALL_relabelled.extract.gz \\
       --allow-extra-chr \\
       --update-sex sex.fam \\
       --split-par 2781479 155701383 \\
