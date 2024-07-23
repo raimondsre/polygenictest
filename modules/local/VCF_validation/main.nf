@@ -9,6 +9,7 @@ process VCF_validation {
 
     input:
     tuple val(meta), val(trait), path(genome_file), val(sex)
+    file(scorefile)
 
     output:
     //path("*.csv"), emit: fam
@@ -25,7 +26,7 @@ process VCF_validation {
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
     output = "${meta}_${trait}_${prefix}"
     """
-    ls PGS001296-run_ALL_additive_0.scorefile.gz
+    ls ${scorefile}
     echo -e "0\\t${meta}\\t${sex}" > sex.fam 
     plink2 \\
         --threads $task.cpus \\

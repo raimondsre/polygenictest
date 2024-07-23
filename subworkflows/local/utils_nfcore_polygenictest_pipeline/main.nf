@@ -87,9 +87,14 @@ workflow PIPELINE_INITIALISATION {
         }
         .set { ch_samplesheet }
 
+    Channel
+        .fromPath("${projectDir}/assets/PGS001296-run_ALL_additive_0.scorefile.gz", checkIfExists: true)
+        .set { ch_scorefile }
+    
     emit:
     samplesheet = ch_samplesheet
     versions    = ch_versions
+    scorefile   = ch_scorefile
 }
 
 /*
