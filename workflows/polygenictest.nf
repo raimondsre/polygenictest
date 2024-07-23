@@ -26,7 +26,7 @@ workflow POLYGENICTEST {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    ch_scorefile
+    // ch_scorefile
 
     main:
 
@@ -37,7 +37,7 @@ workflow POLYGENICTEST {
     //
     VCF_validation (
         ch_samplesheet
-        ch_scorefile
+        // ch_scorefile
     )
     ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
     main_variables_for_VCF_homogenisation = VCF_validation.out.main_variables
