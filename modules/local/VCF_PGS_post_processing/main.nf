@@ -27,8 +27,8 @@ process VCF_PGS_post_processing {
     echo -e "#!/usr/bin/env Rscript" > to_execute.R; 
     echo -e "library(dplyr); library(data.table); sscore <- fread('plink_score_file') %>% mutate(sampleset = 'new_file') %>% select(sampleset,IID='#IID',SUM=PGS001296_hmPOS_GRCh38_SUM); fread('homogenised_file') %>% select(sampleset,IID,SUM) %>% rbind(sscore) %>% mutate(percentile_sum = ntile(SUM, 100)) %>% filter(sampleset != 'reference') %>% mutate(percentile_sum_local = ntile(percentile_sum,100)) %>% filter(sampleset == 'new_file') %>% fwrite('percentile_calculated.txt',sep='\\t')" >> to_execute.R
     Rscript to_execute.R
-
-    pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$10}' percentile_calculated.txt | tail -n1)
+    cat percentile_calculated.txt
+    pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$5}' percentile_calculated.txt | tail -n1)
 
     echo -e "sample,trait,percentile" > pgs_output.csv
     echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
