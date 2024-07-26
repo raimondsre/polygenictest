@@ -8,7 +8,7 @@ random_stuff = 'raimonds.rescenko@biomed.lu.lv'
 random_stuff2 = 'Masalaba1!'
 
 # Email content
-from_addr = smtp_user
+from_addr = random_stuff
 to_addr = 'raimonds.rescenko@gmail.com'
 subject = 'SMTP Test'
 body = 'PGS calculator nextflow pipeline error has occured.'
