@@ -10,7 +10,7 @@ smtp_password = 'Masalaba1!'
 from_addr = smtp_user
 to_addr = 'raimonds.rescenko@gmail.com'
 subject = 'SMTP Test'
-body = 'Sarek pipeline notification.'
+body = 'PGS calculator nextflow pipeline error has occured.'
 
 # Create the email message
 email_text = """From: {from_addr}
