@@ -44,9 +44,11 @@ workflow.onError {
     def b = new StringBuffer()
     def email_on_error = "${projectDir}/assets/sarek_email.py".execute() 
     proc.consumeProcessErrorStream(b)
+    email_on_error.waitFor()
     println proc.text
     println b.toString()
     println email_on_error.text
+
 }
 
 //Updates for integration with calculator platform END
