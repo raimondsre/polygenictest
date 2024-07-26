@@ -39,9 +39,11 @@ workflow.onError {
     println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
 
     def email_on_error = "${projectDir}/bin/sarek_email.py".execute() 
-    email_on_error.waitFor()
-    
+    def b = new StringBuffer()
+    email_on_error.consumeProcessErrorStream(b)
     println email_on_error.text
+    println b.toString()
+
 
 }
 
