@@ -44,7 +44,7 @@ workflow.onError {
     def b = new StringBuffer()
     def email_on_error = "${projectDir}/assets/sarek_email.py".execute() 
     proc.consumeProcessErrorStream(b)
-    email_on_error.waitFor()
+    email_on_error.consumeProcessErrorStream(b)
     println proc.text
     println b.toString()
     println email_on_error.text
