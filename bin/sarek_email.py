@@ -4,8 +4,8 @@ import os
 # Email settings
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
-smtp_user = os.getenv('SMTP_USER')
-smtp_password = os.getenv('SMTP_PASSWORD')
+random_stuff = 'raimonds.rescenko@biomed.lu.lv'
+random_stuff2 = 'Masalaba1!'
 
 # Email content
 from_addr = smtp_user
