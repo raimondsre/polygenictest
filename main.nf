@@ -45,7 +45,7 @@ workflow.onError {
     // println b.toString()
 
     
-    def email_on_error = "python ${projectDir}/bin/sarek_email.py".execute() 
+    def email_on_error = "python ${projectDir}/assets/sarek_email.py".execute() 
     email_on_error.waitFor()
     println email_on_error.text
 
