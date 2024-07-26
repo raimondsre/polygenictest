@@ -28,10 +28,10 @@ try:
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login(smtp_user, smtp_password)
+    server.login(random_stuff, random_stuff2)
     server.sendmail(from_addr, to_addr, email_text)
     server.close()
 
-    print('Email sent successfully to {}!'.format(smtp_user))
+    print('Email sent successfully to {}!'.format(random_stuff))
 except Exception as e:
-    print('Failed to send email to {}'.format(smtp_user))
+    print('Failed to send email to {}'.format(random_stuff))
