@@ -35,21 +35,21 @@
 //     println b.toString()
 // }
 
-workflow.onError {
-    println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
+// workflow.onError {
+//     println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
 
-    // def email_on_error = "python ${projectDir}/bin/sarek_email.py".execute() 
-    // def b = new StringBuffer()
-    // email_on_error.consumeProcessErrorStream(b)
-    // println email_on_error.text
-    // println b.toString()
+//     // def email_on_error = "python ${projectDir}/bin/sarek_email.py".execute() 
+//     // def b = new StringBuffer()
+//     // email_on_error.consumeProcessErrorStream(b)
+//     // println email_on_error.text
+//     // println b.toString()
 
     
-    def email_on_error = "python ${projectDir}/assets/sarek_email.py".execute() 
-    email_on_error.waitFor()
-    println email_on_error.text
+//     // def email_on_error = "python ${projectDir}/assets/sarek_email.py".execute() 
+//     // email_on_error.waitFor()
+//     // println email_on_error.text
 
-}
+// }
 
 //Updates for integration with calculator platform END
 /*
