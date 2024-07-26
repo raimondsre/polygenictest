@@ -32,6 +32,6 @@ try:
     server.sendmail(from_addr, to_addr, email_text)
     server.close()
 
-    print('Email sent successfully!')
+    print('Email sent successfully to {}!'.format(smtp_user))
 except Exception as e:
     print('Failed to send email to {}'.format(smtp_user))
