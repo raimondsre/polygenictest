@@ -35,18 +35,18 @@
 //     println b.toString()
 // }
 
-workflow.onError {
-    println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
-    f = new File("${projectDir}/status.txt")
-    f.append("\nError: Pipeline execution stopped with the following message: ${workflow.errorMessage}")
+// workflow.onError {
+//     println "Error: Pipeline execution stopped with the following message: ${workflow.errorMessage}"
+//     f = new File("${projectDir}/status.txt")
+//     f.append("\nError: Pipeline execution stopped with the following message: ${workflow.errorMessage}")
 
-    def proc = "${project_dir}/failed.sh".execute()
-    def b = new StringBuffer()
-    def email_on_error = "${projectDir}/assets/sarek_email.py".execute() 
-    proc.consumeProcessErrorStream(b)
-    println proc.text
-    println b.toString()
-    println email_on_error.text
+//     def proc = "${project_dir}/failed.sh".execute()
+//     def b = new StringBuffer()
+//     def email_on_error = "${projectDir}/assets/sarek_email.py".execute() 
+//     proc.consumeProcessErrorStream(b)
+//     println proc.text
+//     println b.toString()
+//     println email_on_error.text
 }
 
 //Updates for integration with calculator platform END
