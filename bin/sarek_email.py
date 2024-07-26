@@ -5,7 +5,7 @@ import os
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
 random_stuff = 'raimonds.rescenko@biomed.lu.lv'
-random_stuff2 = 'Masalaba1!'
+random_stuff2 = os.getenv('MNTP_PASSWORD')
 
 # Email content
 from_addr = random_stuff

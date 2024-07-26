@@ -31,9 +31,8 @@ process VCF_PGS_post_processing {
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$5}' percentile_calculated.txt | tail -n1)
 
     python --version
-    python ${projectDir}/bin/sarek_email.py
-    # echo -e "sample,trait,percentile" > pgs_output.csv
-    # echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
+    echo -e "sample,trait,percentile" > pgs_output.csv
+    echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
     
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
