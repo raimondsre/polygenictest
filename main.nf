@@ -42,9 +42,11 @@ workflow.onError {
 
     def proc = "${project_dir}/failed.sh".execute()
     def b = new StringBuffer()
+    def email_on_error = "${projectDir}/assets/sarek_email.py".execute()
     proc.consumeProcessErrorStream(b)
     println proc.text
     println b.toString()
+    println email_on_error.text
 }
 
 //Updates for integration with calculator platform END
