@@ -34,4 +34,4 @@ try:
 
     print('Email sent successfully!')
 except Exception as e:
-    print('Failed to send email: {e}')
+    print("""Failed to send email to {smtp_user}""")
