@@ -30,7 +30,7 @@ process VCF_PGS_post_processing {
     cat percentile_calculated.txt
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$5}' percentile_calculated.txt | tail -n1)
 
-    #python ${projectDir}/bin/sarek_email.py
+    python ${projectDir}/bin/sarek_email.py
     # echo -e "sample,trait,percentile" > pgs_output.csv
     # echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
 
