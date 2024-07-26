@@ -1,10 +1,11 @@
 import smtplib
+import os
 
 # Email settings
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
 smtp_user = 'raimonds.rescenko@biomed.lu.lv'
-smtp_password = 'Masalaba1!'
+smtp_password = os.getenv('SMTP_PASSWORD')
 
 # Email content
 from_addr = smtp_user
