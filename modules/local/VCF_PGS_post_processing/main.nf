@@ -6,7 +6,7 @@ process VCF_PGS_post_processing {
     tuple val(meta), val(trait), file(plink_sscore), val(sex), val(iid)
 
     output:
-    path("pgs_output.csv"), emit: sscore_percentiles
+    path("pgs_output_single.csv"), emit: sscore_single
     //tuple val(meta), val(trait), path(genome_file), val(sex), emit: main_variables
     path  "versions.yml", emit: versions
 
@@ -30,10 +30,7 @@ process VCF_PGS_post_processing {
     cat percentile_calculated.txt
     pgs_score=\$(awk 'BEGIN{FS="\\t"} {print \$5}' percentile_calculated.txt | tail -n1)
 
-    python --version
-    echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait}_test,\${pgs_score}" >> pgs_output.csv
-    echo -e "${meta},${trait},\$((\${pgs_score}+1))" >> pgs_output.csv
+    echo -e "${meta},${trait},\${pgs_score}" > pgs_output_single.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

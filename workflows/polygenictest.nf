@@ -25,6 +25,7 @@ include { VCF_validation          } from '../modules/local/VCF_validation/main'
 include { VCF_homogenisation      } from '../modules/local/VCF_homogenisation/main'
 include { VCF_PLINK_sscore        } from '../modules/local/VCF_PLINK_sscore/main'
 include { VCF_PGS_post_processing } from '../modules/local/VCF_PGS_post_processing/main'
+include { Merge_results } from '../modules/local/Merge_results/main'
 
 //include { MULTIQC               } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap        } from 'plugin/nf-validation'
@@ -47,6 +48,7 @@ workflow POLYGENICTEST {
     main:
 
     ch_versions = Channel.empty()
+    sscore_multiple = Channel.empty()
 
     //
     // MODULE: Run VCF_validation
@@ -71,9 +73,14 @@ workflow POLYGENICTEST {
     VCF_PGS_post_processing (
         PLINK_sscore_file
     )
+    sscore_all = sscore_multiple.mix(VCF_PGS_post_processing.out.sscore_single)
+    
+    Merge_results (
+        sscore_all
+    )
 
     emit:
-    VCF_PLINK_sscore_report = VCF_PGS_post_processing.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = Merge_results.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 
