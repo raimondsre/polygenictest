@@ -1,4 +1,4 @@
-process Merge_results {
+process VCF_merge_results {
     tag "Merge_results"
     label 'process_medium'
 
