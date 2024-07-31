@@ -33,7 +33,8 @@ process VCF_PGS_post_processing {
     python --version
     echo -e "sample,trait,percentile" > pgs_output.csv
     echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
-    
+    echo -e "${meta},${trait},\$((\${pgs_score}+1))" >> pgs_output.csv
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         plink2: \$(plink2 --version 2>&1 | sed 's/^PLINK v//; s/ 64.*\$//' )
