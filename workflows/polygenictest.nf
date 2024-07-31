@@ -48,7 +48,7 @@ workflow POLYGENICTEST {
     main:
 
     ch_versions = Channel.empty()
-    sscore_multiple = Channel.empty()
+    sscore_all = Channel.empty()
 
     //
     // MODULE: Run VCF_validation
@@ -73,7 +73,7 @@ workflow POLYGENICTEST {
     VCF_PGS_post_processing (
         PLINK_sscore_file
     )
-    sscore_all = sscore_multiple.mix(VCF_PGS_post_processing.out.sscore_single)
+    sscore_all = sscore_all.mix(VCF_PGS_post_processing.out.sscore_single)
     
     Merge_results (
         sscore_all
