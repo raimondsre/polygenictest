@@ -22,10 +22,10 @@ workflow.onError {
 
 include { FASTQC                  } from '../modules/nf-core/fastqc/main'
 include { VCF_validation          } from '../modules/local/VCF_validation/main'
-include { VCF_homogenisation      } from '../modules/local/VCF_homogenisation/main'
-include { VCF_PLINK_sscore        } from '../modules/local/VCF_PLINK_sscore/main'
-include { VCF_PGS_post_processing } from '../modules/local/VCF_PGS_post_processing/main'
-include { Merge_results } from '../modules/local/Merge_results/main'
+include { Homogenisation      } from '../modules/local/Homogenisation/main'
+include { PLINK_sscore        } from '../modules/local/PLINK_sscore/main'
+include { PGS_post_processing } from '../modules/local/PGS_post_processing/main'
+include { VCF_merge_results } from '../modules/local/VCF_merge_results/main'
 
 //include { MULTIQC               } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap        } from 'plugin/nf-validation'
@@ -60,27 +60,27 @@ workflow POLYGENICTEST {
     ch_versions = ch_versions.mix(VCF_validation.out.versions.first())
     main_variables_for_VCF_homogenisation = VCF_validation.out.main_variables
     
-    VCF_homogenisation (
+    Homogenisation (
         main_variables_for_VCF_homogenisation
     )
-    main_variables_for_PLINK_sscore_generation = VCF_homogenisation.out.main_variables
+    main_variables_for_PLINK_sscore_generation = Homogenisation.out.main_variables
 
-    VCF_PLINK_sscore (
+    PLINK_sscore (
         main_variables_for_PLINK_sscore_generation
     )
-    PLINK_sscore_file = VCF_PLINK_sscore.out.main_variables
+    PLINK_sscore_file = PLINK_sscore.out.main_variables
 
-    VCF_PGS_post_processing (
+    PGS_post_processing (
         PLINK_sscore_file
     )
-    sscore_all = sscore_all.mix(VCF_PGS_post_processing.out.sscore_single)
+    sscore_all = sscore_all.mix(PGS_post_processing.out.sscore_single)
     
-    Merge_results (
+    VCF_merge_results (
         sscore_all
     )
 
     emit:
-    VCF_PLINK_sscore_report = Merge_results.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
+    VCF_PLINK_sscore_report = VCF_merge_results.out.sscore_percentiles.toList() // channel: /path/to/multiqc_report.html
     
     // VCF_conversion (
 
