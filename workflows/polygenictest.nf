@@ -25,7 +25,7 @@ include { VCF_validation          } from '../modules/local/VCF_validation/main'
 include { Homogenisation      } from '../modules/local/Homogenisation/main'
 include { PLINK_sscore        } from '../modules/local/PLINK_sscore/main'
 include { PGS_post_processing } from '../modules/local/PGS_post_processing/main'
-include { VCF_merge_results } from '../modules/local/VCF_merge_results/main'
+include { VCF_merge_results } from '../modules/local/Merge_results/main'
 
 //include { MULTIQC               } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap        } from 'plugin/nf-validation'
