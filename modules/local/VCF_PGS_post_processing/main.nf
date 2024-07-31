@@ -32,7 +32,7 @@ process VCF_PGS_post_processing {
 
     python --version
     echo -e "sample,trait,percentile" > pgs_output.csv
-    echo -e "${meta},${trait},\${pgs_score}" >> pgs_output.csv
+    echo -e "${meta},${trait}_test,\${pgs_score}" >> pgs_output.csv
     echo -e "${meta},${trait},\$((\${pgs_score}+1))" >> pgs_output.csv
 
     cat <<-END_VERSIONS > versions.yml
