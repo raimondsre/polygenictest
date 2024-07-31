@@ -1,5 +1,5 @@
-process VCF_PGS_post_processing {
-    tag "PGS_post_processing"
+process Merge_results {
+    tag "Merge_results"
     label 'process_medium'
 
     input:
@@ -14,7 +14,7 @@ process VCF_PGS_post_processing {
     task.ext.when == null || task.ext.when 
 
     script: 
-    def prefix = task.ext.prefix ?: "PLINK_sscore"
+    def prefix = task.ext.prefix ?: "Merge_results"
     def memory_in_mb = MemoryUnit.of("${task.memory}").toUnit('MB')
     // Process memory value allowed range (100 - 10000)
     def mem = memory_in_mb > 10000 ? 10000 : (memory_in_mb < 100 ? 100 : memory_in_mb)
