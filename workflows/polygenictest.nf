@@ -73,7 +73,7 @@ workflow POLYGENICTEST {
     PGS_post_processing (
         PLINK_sscore_file
     )
-    sscore_all = sscore_all.mix(PGS_post_processing.out.sscore_single)
+    sscore_all = PGS_post_processing.out.sscore_single.collect()
     
     VCF_merge_results (
         sscore_all
