@@ -17,9 +17,8 @@
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 1. Read genome file
-2. Apply quality control
-3. Impute missing genotypes
-4. Calculate polygenic risk score
+2. Homogenise
+3. Calculate polygenic risk score
 
 ## Usage
 
@@ -48,7 +47,7 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run raimondsre/polygenictest \
-   -profile <docker/singularity/.../institute> \
+   -profile <docker/singularity> \
    --input samplesheet.csv \
    --outdir <OUTDIR>
 ```
